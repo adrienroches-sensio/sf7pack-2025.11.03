@@ -29,6 +29,10 @@ final class EventDispatcher
 
         foreach ($listeners as $listener) {
             $listener($event);
+
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                break;
+            }
         }
 
         return $event;

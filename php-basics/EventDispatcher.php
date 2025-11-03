@@ -6,7 +6,7 @@ final class EventDispatcher
 {
     private array $listeners = [];
 
-    public function addListener(string $eventName, callable $listener): void
+    public function addListener(string $eventName, callable|EventListenerInterface $listener): void
     {
         $this->listeners[$eventName] ??= [];
 
@@ -15,7 +15,21 @@ final class EventDispatcher
 
     public function dispatch(object $event, string|null $eventName = null): object
     {
-        foreach ($this->getListeners($eventName ?? $event::class) as $listener) {
+        $eventName ??= $event::class;
+
+        $listeners = $this->getListeners($eventName);
+
+        if (count($listeners) === 0) {
+            throw EventDispatcherException::noListenersForEvent($eventName);
+        }
+
+        foreach ($listeners as $listener) {
+            if ($listener instanceof EventListenerInterface) {
+                $listener->handle($event);
+
+                continue;
+            }
+
             $listener($event);
         }
 

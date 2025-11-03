@@ -6,7 +6,7 @@ final class EventDispatcher
 {
     private array $listeners = [];
 
-    public function addListener(string $eventName, callable|EventListenerInterface $listener): void
+    public function addListener(string $eventName, callable|EventListenerInterface $listener, int $priority = 0): void
     {
         $this->listeners[$eventName] ??= [];
 
@@ -14,7 +14,7 @@ final class EventDispatcher
             $listener = $listener->handle(...);
         }
 
-        $this->listeners[$eventName][] = $listener;
+        $this->listeners[$eventName][] = [$listener, $priority];
     }
 
     public function dispatch(object $event, string|null $eventName = null): object
@@ -36,6 +36,15 @@ final class EventDispatcher
 
     private function getListeners(string $eventName): array
     {
-        return $this->listeners[$eventName] ?? [];
+        $listeners = $this->listeners[$eventName] ?? [];
+
+        usort($listeners, function (array $listenerConfig1, array $listenerConfig2): int {
+            [, $priority1] = $listenerConfig1;
+            [, $priority2] = $listenerConfig2;
+
+            return $priority2 <=> $priority1;
+        });
+
+        return array_column($listeners, 0, null);
     }
 }

@@ -1,7 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Welcome !' %}
+{% block title %}Welcome!{% endblock %}
 
-{% block content %}
-    <h1>Hello {{ name }}!</h1>
-{% endblock content %}
+{% block body %}
+    <section id="home">
+        <div class="container">
+            <div class="row align-items-center g-2">
+                <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end">
+                    {# image comes here. Classes: pt-7 pt-md-0 w-100 #}
+                </div>
+                <div class="col-md-7 col-lg-6 py-6 text-md-start text-center">
+                    <h6 class="text-uppercase fw-bold text-600">Sensio<span style="color: limegreen;">Conferences</span></h6>
+                    <h1 class="fw-bold fs-1" style="color: limegreen;"> The plaform for<br />better cooperation</h1>
+                    <p class="mb-5 fs-4 fw-medium">Crafted with care &amp; creativity. Brings together <br class="d-none d-xl-block" />everthing in one place.</p><a class="btn hover-top btn-primary" style="background-color: limegreen; border-color: limegreen;" href="/contact"> CONTACT</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

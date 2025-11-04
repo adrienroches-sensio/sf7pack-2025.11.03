@@ -2,12 +2,12 @@
 
 {% block title %}Welcome!{% endblock %}
 
-{% block body %}
+{% block content %}
     <section id="home">
         <div class="container">
             <div class="row align-items-center g-2">
                 <div class="col-md-5 col-lg-6 order-0 order-md-1 text-end">
-                    {# image comes here. Classes: pt-7 pt-md-0 w-100 #}
+                    <img src="{{ asset('images/hero-header.gif') }}" class="pt-7 pt-md-0 w-100" alt="Main banner">
                 </div>
                 <div class="col-md-7 col-lg-6 py-6 text-md-start text-center">
                     <h6 class="text-uppercase fw-bold text-600">Sensio<span style="color: limegreen;">Conferences</span></h6>
@@ -17,4 +17,4 @@
             </div>
         </div>
     </section>
-{% endblock %}
+{% endblock content %}

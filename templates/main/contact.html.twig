@@ -2,7 +2,7 @@
 
 {% block title %}Contact{% endblock %}
 
-{% block body %}
+{% block content %}
     <section class="py-5">
         <div class="container px-5 px-5">
             <div class="text-center mb-5">
@@ -11,9 +11,9 @@
             </div>
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-6">
-                    {# insert contact form here #}
+                    {{ include('main/_contact_form.html.twig') }}
                 </div>
             </div>
         </div>
     </section>
-{% endblock %}
+{% endblock content %}

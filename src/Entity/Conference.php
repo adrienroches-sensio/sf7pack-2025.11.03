@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ConferenceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,24 @@ class Conference
 
     #[ORM\Column]
     private ?\DateTimeImmutable $endAt = null;
+
+    /**
+     * @var Collection<int, Volunteering>
+     */
+    #[ORM\OneToMany(targetEntity: Volunteering::class, mappedBy: 'conference', orphanRemoval: true)]
+    private Collection $volunteerings;
+
+    /**
+     * @var Collection<int, Organization>
+     */
+    #[ORM\ManyToMany(targetEntity: Organization::class, inversedBy: 'conferences')]
+    private Collection $organizations;
+
+    public function __construct()
+    {
+        $this->volunteerings = new ArrayCollection();
+        $this->organizations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +125,60 @@ class Conference
     public function setEndAt(\DateTimeImmutable $endAt): static
     {
         $this->endAt = $endAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Volunteering>
+     */
+    public function getVolunteerings(): Collection
+    {
+        return $this->volunteerings;
+    }
+
+    public function addVolunteering(Volunteering $volunteering): static
+    {
+        if (!$this->volunteerings->contains($volunteering)) {
+            $this->volunteerings->add($volunteering);
+            $volunteering->setConference($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVolunteering(Volunteering $volunteering): static
+    {
+        if ($this->volunteerings->removeElement($volunteering)) {
+            // set the owning side to null (unless already changed)
+            if ($volunteering->getConference() === $this) {
+                $volunteering->setConference(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Organization>
+     */
+    public function getOrganizations(): Collection
+    {
+        return $this->organizations;
+    }
+
+    public function addOrganization(Organization $organization): static
+    {
+        if (!$this->organizations->contains($organization)) {
+            $this->organizations->add($organization);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganization(Organization $organization): static
+    {
+        $this->organizations->removeElement($organization);
 
         return $this;
     }

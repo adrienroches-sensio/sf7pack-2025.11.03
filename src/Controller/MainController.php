@@ -13,7 +13,7 @@ class MainController extends AbstractController
 {
     #[Route(
         path: '/',
-        name: 'app_index',
+        name: 'app_main_index',
         methods: ['GET']
     )]
     public function index(Request $request): Response
@@ -21,5 +21,11 @@ class MainController extends AbstractController
         $name = $request->query->get('name', 'World');
 
         return new Response("Hello {$name}!");
+    }
+
+    #[Route(path: '/contact', name: 'app_main_contact', methods: ['GET'])]
+    public function contact(): Response
+    {
+        return new Response('Contact');
     }
 }

@@ -7,7 +7,9 @@ namespace App\Controller;
 use App\Entity\Conference;
 use App\Form\ConferenceType;
 use App\Repository\ConferenceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
@@ -17,12 +19,21 @@ class ConferenceController extends AbstractController
     #[Route(
         path: '/conferences/new',
         name: 'app_conference_new',
+        methods: ['GET', 'POST']
     )]
-    public function newConference(): Response
+    public function newConference(Request $request, EntityManagerInterface $entityManager): Response
     {
         $conference = new Conference();
 
         $form = $this->createForm(ConferenceType::class, $conference);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($conference);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_conference_list');
+        }
 
         return $this->render('conferences/new.html.twig', [
             'form' => $form,

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Conference;
+use App\Repository\ConferenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use function array_map;
 
 class ConferenceController extends AbstractController
 {
@@ -36,5 +38,38 @@ class ConferenceController extends AbstractController
         $em->flush();
 
         return new Response("Conference {$conference->getId()} created");
+    }
+
+    #[Route(
+        path: '/conferences',
+        name: 'app_conference_list',
+        methods: ['GET'],
+    )]
+    public function list(ConferenceRepository $conferenceRepository): Response
+    {
+        $content = array_map(static function(Conference $conference): array {
+            return [
+                'id' => $conference->getId(),
+                'name' => $conference->getName(),
+            ];
+        }, $conferenceRepository->listAll());
+
+        return $this->json($content);
+    }
+
+    #[Route(
+        path: '/conferences/{id}',
+        name: 'app_conference_show',
+        requirements: [
+            'id' => Requirement::DIGITS,
+        ],
+        methods: ['GET'],
+    )]
+    public function show(Conference $conference): Response
+    {
+        return $this->json([
+            'id' => $conference->getId(),
+            'name' => $conference->getName(),
+        ]);
     }
 }

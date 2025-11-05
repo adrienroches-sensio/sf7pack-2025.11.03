@@ -20,6 +20,14 @@ class ConferenceRepository extends ServiceEntityRepository
 
     /**
      * @return list<Conference>
+     */
+    public function listAll(): array
+    {
+        return $this->findAll();
+    }
+
+    /**
+     * @return list<Conference>
      *
      * @throws InvalidArgumentException When both dates are null (one must be provided).
      */

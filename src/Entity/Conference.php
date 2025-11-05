@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use function count;
 
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
@@ -17,21 +18,30 @@ class Conference
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotNull()]
+    #[Assert\Length(min: 10)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotNull()]
+    #[Assert\Length(min: 30)]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?bool $accessible = null;
+    private bool $accessible = false;
 
+    #[Assert\Length(min: 20)]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $prerequisites = null;
 
+    #[Assert\NotNull()]
+    #[Assert\GreaterThanOrEqual(value: 'today')]
     #[ORM\Column]
     private ?\DateTimeImmutable $startAt = null;
 
+    #[Assert\NotNull()]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'startAt')]
     #[ORM\Column]
     private ?\DateTimeImmutable $endAt = null;
 

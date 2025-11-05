@@ -1,51 +1,55 @@
-{# TODO: Use this template as your page's body #}
+{% extends 'base.html.twig' %}
 
-<style>
-    body {
-        background-color: color-mix(in srgb, palegreen 5%, transparent);
-    }
-</style>
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: color-mix(in srgb, palegreen 5%, transparent);
+        }
+    </style>
+{% endblock stylesheets %}
 
-<section class="vh-100">
-    <div class="card w-50 h-75 m-auto p-5 bg-white border-0 shadow text-center">
-        <div class="card-title py-3">
-            <h1 class="mb-3 fw-normal">Please sign in</h1>
-        </div>
-        <div class="card-body pt-5">
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a
+{% block content %}
+    <section class="vh-100">
+        <div class="card w-50 h-75 m-auto p-5 bg-white border-0 shadow text-center">
+            <div class="card-title py-3">
+                <h1 class="mb-3 fw-normal">Please sign in</h1>
+            </div>
+            <div class="card-body pt-5">
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a
                             href="{{ logout_path() }}">Logout</a>
-                </div>
-            {% endif %}
-            <form method="post" class="w-50 m-auto">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
                 {% endif %}
+                <form method="post" class="w-50 m-auto">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-                <div class="form-floating mb-3">
-                    <input type="email" value="{{ last_username }}" name="_username" id="username"
-                           class="form-control"
-                           placeholder="Your email address" autocomplete="email" required autofocus>
-                    <label for="username">Email</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" name="_password" id="password" class="form-control"
-                           placeholder="Your password" autocomplete="current-password" required>
-                    <label for="password">Password</label>
-                </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" value="{{ last_username }}" name="_username" id="username"
+                               class="form-control"
+                               placeholder="Your username" autocomplete="username" required autofocus>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="_password" id="password" class="form-control"
+                               placeholder="Your password" autocomplete="current-password" required>
+                        <label for="password">Password</label>
+                    </div>
 
-                <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
 
-                <div class="d-grid">
-                    <button class="btn btn-lg btn-primary button-lg" style="background-color: limegreen;"
-                            type="submit">
-                        Sign in
-                    </button>
-                </div>
-            </form>
+                    <div class="d-grid">
+                        <button class="btn btn-lg btn-primary button-lg" style="background-color: limegreen;"
+                                type="submit">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endblock content %}

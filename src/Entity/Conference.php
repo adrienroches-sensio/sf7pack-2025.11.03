@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use function count;
 
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
 class Conference
@@ -165,6 +166,11 @@ class Conference
     public function getOrganizations(): Collection
     {
         return $this->organizations;
+    }
+
+    public function hasOrganizations(): bool
+    {
+        return count($this->getOrganizations()) > 0;
     }
 
     public function addOrganization(Organization $organization): static

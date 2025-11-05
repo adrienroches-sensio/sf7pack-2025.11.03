@@ -6,6 +6,7 @@
             <div class="row">
                 <div class="col-md-10 m-auto">
                     <h1 class="fw-bolder" style="color: limegreen;">List all conferences</h1>
+                    <a href="{{ path('app_conference_new') }}" class="btn btn-primary">Submit a conference</a>
                     <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
                         {% for conference in conferences %}
                             <div class="col">

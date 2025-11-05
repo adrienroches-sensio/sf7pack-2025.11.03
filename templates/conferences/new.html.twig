@@ -1,9 +1,11 @@
-{# TODO: Use this template as your page's body #}
+{% extends 'base.html.twig' %}
 
-<section class="container row row-cols-1">
-    <div class="col-md-8 mx-auto">
-        <h1>New conference</h1>
-    </div>
+{% block content %}
+    <section class="container row row-cols-1">
+        <div class="col-md-8 mx-auto">
+            <h1>New conference</h1>
+        </div>
 
-    {# TODO: Replace me #}
-</section>
+        {{ include('conferences/_form.html.twig') }}
+    </section>
+{% endblock content %}

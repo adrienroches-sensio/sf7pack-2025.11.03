@@ -27,6 +27,24 @@ class AppFixtures extends Fixture
             $manager->persist($symfonyLive);
         }
 
+        $symfony = $this->createOrganization('Symfony SAS');
+        $manager->persist($symfony);
+
+        $symfonyCon2025 = $this->createConference(
+            name: 'SymfonyCon 2025',
+            start: new DateTimeImmutable('2025-11-27'),
+            organizations: [$symfony, $sensioLabs],
+        );
+        $manager->persist($symfonyCon2025);
+
+        $conferenceWithoutOrganizations = $this->createConference(
+            name: 'Conference without organizations',
+            start: new DateTimeImmutable('2020-02-12'),
+            accessible: false,
+            prerequisites: 'Some prerequisites',
+        );
+        $manager->persist($conferenceWithoutOrganizations);
+
         $manager->flush();
     }
 

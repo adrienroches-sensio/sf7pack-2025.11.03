@@ -6,6 +6,7 @@ use App\Entity\Conference;
 use App\Entity\Organization;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,15 +19,17 @@ class ConferenceType extends AbstractType
             ->add('description')
             ->add('accessible')
             ->add('prerequisites')
-            ->add('startAt', null, [
+            ->add('startAt', DateType::class, [
                 'widget' => 'single_text',
+                'input' => 'datetime_immutable',
             ])
-            ->add('endAt', null, [
+            ->add('endAt', DateType::class, [
                 'widget' => 'single_text',
+                'input' => 'datetime_immutable',
             ])
             ->add('organizations', EntityType::class, [
                 'class' => Organization::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ])
         ;

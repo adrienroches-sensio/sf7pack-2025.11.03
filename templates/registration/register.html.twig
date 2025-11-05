@@ -1,19 +1,38 @@
-{% extends 'base.html.twig' %}
+{# TODO: Use this template as your page's body #}
+{# TIP: You can change the form theme for registrationForm to improve styling #}
 
-{% block title %}Register{% endblock %}
+<style>
+    body {
+        background-color: color-mix(in srgb, palegreen 5%, transparent);
+    }
+</style>
 
-{% block body %}
-    <h1>Register</h1>
+<section class="vh-100">
+    <div class="card w-50 h-75 m-auto p-5 bg-white border-0 shadow text-center">
+        <div class="card-title py-3">
+            <h1 class="mb-3 fw-normal">Register</h1>
+        </div>
 
-    {{ form_errors(registrationForm) }}
+        <div class="card-body pt-5">
+            {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_start(registrationForm, {attr: {class: 'w-75 m-auto'}}) }}
+            {{ form_row(registrationForm.email, {
+                row_attr: {class: 'form-floating mb-3'},
+                attr: {placeholder: 'Enter your email address'},
+                label: 'Your email'}) }}
+            {{ form_row(registrationForm.plainPassword, {
+                row_attr: {class: 'form-floating mb-3'},
+                attr: {placeholder: 'Enter the desired password'},
+                label: 'Your Password'
+            }) }}
+            {{ form_row(registrationForm.agreeTerms, {label: 'I agree the the Terms & Conditions'}) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-{% endblock %}
+            <div class="d-grid">
+                <button type="submit" class="btn text-dark" style="background-color: limegreen;">Register</button>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</section>
+

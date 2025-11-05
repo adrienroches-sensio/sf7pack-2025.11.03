@@ -1,0 +1,47 @@
+{# TODO: Use this template for your page's body #}
+
+<section id="list-conferences">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 m-auto">
+                <h1 class="fw-bolder" style="color: limegreen;">List all conferences</h1>
+                <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+                    {# TODO: Loop here through conferences #}
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h5 class="fw-bolder mb-0">
+                                            <a href="{# TODO: uri to conference_show with conference id #}"
+                                               class="stretched-link text-decoration-none"
+                                               style="color: limegreen;">{# TODO: conference name #}</a>
+                                        </h5>
+                                    </div>
+                                    <div class="card-text d-flex justify-content-between">
+                                        <div>
+                                            {# TODO: If there are organizations associated with the even #}
+                                                <p class="my-0">{# TODO: display organization names as a single string #}</p>
+                                            {# TODO: End condition #}
+                                        </div>
+                                        <div>
+                                            <p class="mb-0">From <span
+                                                        class="fw-semibold">{# TODO: conference start date #}</span>
+                                                to
+                                                <span class="fw-semibold">{# TODO: conference end date #}</span></p>
+                                            <p class="my-0 fst-italic">{# TODO: conference volunteerings number or 0 #} volunteers
+                                                yet.</p>
+                                            <p class="mt-0">Accessible
+                                                : {# TODO: Yes or No #}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {# TODO: else Loop #}
+                        <div> There are no conferences yet...</div>
+                    {# TODO: end Loop #}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

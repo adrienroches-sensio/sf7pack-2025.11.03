@@ -5,40 +5,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 m-auto">
-                    <h1 class="fw-bolder" style="color: limegreen;">List all conferences</h1>
+                    {{ include('conferences/_search_form.html.twig', with_context: false) }}
+
                     <a href="{{ path('app_conference_new') }}" class="btn btn-primary">Submit a conference</a>
                     <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
                         {% for conference in conferences %}
-                            <div class="col">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="card-title">
-                                            <h5 class="fw-bolder mb-0">
-                                                <a href="{{ path('app_conference_show', {id: conference.id}) }}"
-                                                   class="stretched-link text-decoration-none"
-                                                   style="color: limegreen;">{{ conference.name }}</a>
-                                            </h5>
-                                        </div>
-                                        <div class="card-text d-flex justify-content-between">
-                                            <div>
-                                                {% if conference.hasOrganizations %}
-                                                    <p class="my-0">{{ conference.organizations|map((organization) => organization.name)|join(', ') }}</p>
-                                                {% endif %}
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">From <span
-                                                        class="fw-semibold">{{ conference.startAt|date('Y-m-d') }}</span>
-                                                    to
-                                                    <span class="fw-semibold">{{ conference.endAt|date('Y-m-d') }}</span></p>
-                                                <p class="my-0 fst-italic">{{ conference.volunteerings|length }} volunteers
-                                                    yet.</p>
-                                                <p class="mt-0">Accessible
-                                                    : {{ conference.isAccessible ? 'Yes' : 'No' }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{ include('conferences/_card.html.twig', {'conference': conference}, with_context: false) }}
                         {% else %}
                             <div> There are no conferences yet...</div>
                         {% endfor %}

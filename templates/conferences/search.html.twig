@@ -1,59 +1,28 @@
-{# TODO: Use this template as your page's body #}
+{% extends 'base.html.twig' %}
 
-<section id="list-conferences">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 m-auto">
-                <div class="d-flex justify-content-between">
-                    <h1 class="fw-bolder" style="color: limegreen;">Search conferences</h1>
-                    <form action="{# TODO: Replace me #}" method="get">
-                        <div class="input-group">
-                            <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="Search an conference by name">
-                            <button type="submit" class="btn btn-sm fw-semibold" style="border: 1px solid limegreen; color: limegreen;">Search</button>
-                            <label for="name" class="visually-hidden">Conference name</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
-                    {# TODO: Loop here #}
-                    <div class="col">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <h5 class="fw-bolder mb-0">
-                                        {# TODO: Replace me #}
-                                    </h5>
-                                </div>
-                                <div class="card-text d-flex justify-content-between">
-                                    <div>
-                                        {# TODO: Condition here #}
-                                        <p class="my-0">{# TODO: Replace me #}</p>
-                                        {# TODO: End condition #}
-                                    </div>
-                                    <div>
-                                        <p class="mb-0">From <span
-                                                class="fw-semibold">{# TODO: Replace me #}</span>
-                                            to
-                                            <span class="fw-semibold">{# TODO: Replace me #}</span></p>
-                                        <p class="mt-0">Accessible
-                                            : {# TODO: Replace me #}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+{% block content %}
+    <section id="list-conferences">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 m-auto">
+                    {{ include('conferences/_search_form.html.twig') }}
+
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+                        {% for conference in conferences %}
+                            {{ include('conferences/_card.html.twig', {'conference': conference}, with_context: false) }}
+                        {% else %}
+                            <div> There are no conferences yet...</div>
+                        {% endfor %}
                     </div>
-                    {# TODO: Else loop #}
-                    <div> There are no conferences yet...</div>
-                    {# TODO: End loop #}
-                </div>
-                <div class="row">
-                    <div class="col m-auto justify-content-start">
-                        <a href="{# TODO: Replace me #}">
-                            <button class="btn text-black bg-white" style="border-color: limegreen;">Back</button>
-                        </a>
+                    <div class="row">
+                        <div class="col m-auto justify-content-start">
+                            <a href="{{ path('app_conference_list') }}">
+                                <button class="btn text-black bg-white" style="border-color: limegreen;">Back</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endblock content %}

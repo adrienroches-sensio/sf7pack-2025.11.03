@@ -28,6 +28,21 @@ class ConferenceRepository extends ServiceEntityRepository
 
     /**
      * @return list<Conference>
+     */
+    public function searchByName(string $name): array
+    {
+        $qb = $this->createQueryBuilder('conference');
+
+        $qb
+            ->andWhere($qb->expr()->like('conference.name', ':name'))
+            ->setParameter('name', "%{$name}%")
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return list<Conference>
      *
      * @throws InvalidArgumentException When both dates are null (one must be provided).
      */

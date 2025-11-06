@@ -1,0 +1,8 @@
+framework:
+    http_client:
+        scoped_clients:
+            devevents-api.client:
+                base_uri: 'https://www.devevents-api.fr'
+                headers:
+                    Accept: 'application/json'
+                    apikey: '%env(DEVEVENTS_API_KEY)%'

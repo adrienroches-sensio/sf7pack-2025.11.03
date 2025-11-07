@@ -13,11 +13,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ConferenceController extends AbstractController
 {
@@ -26,6 +28,7 @@ class ConferenceController extends AbstractController
         name: 'app_conference_new',
         methods: ['GET', 'POST']
     )]
+    #[IsGranted(new Expression('is_granted("ROLE_WEBSITE") or is_granted("ROLE_ORGANIZER")'))]
     public function newConference(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $conference = new Conference();

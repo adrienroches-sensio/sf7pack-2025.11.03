@@ -57,6 +57,10 @@ class Conference
     #[ORM\ManyToMany(targetEntity: Organization::class, inversedBy: 'conferences')]
     private Collection $organizations;
 
+    #[ORM\ManyToOne(inversedBy: 'conferences')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
+
     public function __construct()
     {
         $this->volunteerings = new ArrayCollection();
@@ -195,6 +199,18 @@ class Conference
     public function removeOrganization(Organization $organization): static
     {
         $this->organizations->removeElement($organization);
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

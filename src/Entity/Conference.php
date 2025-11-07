@@ -18,30 +18,30 @@ class Conference
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotNull()]
-    #[Assert\Length(min: 10)]
+    #[Assert\NotNull(groups: ['Default', 'edit'])]
+    #[Assert\Length(min: 10, groups: ['Default', 'edit'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Assert\NotNull()]
-    #[Assert\Length(min: 30)]
+    #[Assert\NotNull(groups: ['Default', 'edit'])]
+    #[Assert\Length(min: 30, groups: ['Default', 'edit'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column]
     private bool $accessible = false;
 
-    #[Assert\Length(min: 20)]
+    #[Assert\Length(min: 20, groups: ['Default', 'edit'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $prerequisites = null;
 
-    #[Assert\NotNull()]
-    #[Assert\GreaterThanOrEqual(value: 'today')]
+    #[Assert\NotNull(groups: ['Default', 'edit'])]
+    #[Assert\GreaterThanOrEqual(value: 'today', groups: ['Default'])]
     #[ORM\Column]
     private ?\DateTimeImmutable $startAt = null;
 
-    #[Assert\NotNull()]
-    #[Assert\GreaterThanOrEqual(propertyPath: 'startAt')]
+    #[Assert\NotNull(groups: ['Default', 'edit'])]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'startAt', groups: ['Default', 'edit'])]
     #[ORM\Column]
     private ?\DateTimeImmutable $endAt = null;
 

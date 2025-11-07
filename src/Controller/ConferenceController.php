@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Conference\ConferenceSubmittedEvent;
 use App\Entity\Conference;
 use App\Form\ConferenceType;
 use App\Repository\ConferenceRepository;
 use App\Search\ConferenceSearchInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +26,7 @@ class ConferenceController extends AbstractController
         name: 'app_conference_new',
         methods: ['GET', 'POST']
     )]
-    public function newConference(Request $request, EntityManagerInterface $entityManager): Response
+    public function newConference(Request $request, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher): Response
     {
         $conference = new Conference();
 
@@ -31,10 +34,19 @@ class ConferenceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($conference);
-            $entityManager->flush();
+            $event = new ConferenceSubmittedEvent($conference);
+            $eventDispatcher->dispatch($event);
 
-            return $this->redirectToRoute('app_conference_list');
+            if (!$event->isRejected()) {
+                $entityManager->persist($conference);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_conference_list');
+            }
+
+            foreach ($event->getRejectReasons() as $reason) {
+                $form->addError(new FormError($reason));
+            }
         }
 
         return $this->render('conferences/new.html.twig', [

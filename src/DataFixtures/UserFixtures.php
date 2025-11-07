@@ -11,6 +11,26 @@ class UserFixtures extends Fixture
 {
     private const USERS = [
         [
+            'username' => 'nobody',
+            'password' => 'nobody',
+            'roles' => [],
+        ],
+        [
+            'username' => 'user',
+            'password' => 'user',
+            'roles' => ['ROLE_USER'],
+        ],
+        [
+            'username' => 'website',
+            'password' => 'website',
+            'roles' => ['ROLE_WEBSITE'],
+        ],
+        [
+            'username' => 'organizer',
+            'password' => 'organizer',
+            'roles' => ['ROLE_ORGANIZER'],
+        ],
+        [
             'username' => 'admin',
             'password' => 'admin',
             'roles' => ['ROLE_ADMIN'],

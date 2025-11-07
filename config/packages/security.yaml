@@ -1,4 +1,20 @@
 security:
+    role_hierarchy:
+        # Base role for any connected user.
+        ROLE_USER: ~
+
+        # A regular trusted volunteer at events.
+        ROLE_VOLUNTEER: [ 'ROLE_USER' ]
+
+        # Manage and maintain the website content.
+        ROLE_WEBSITE: [ 'ROLE_USER' ]
+
+        # Any conference organizer.
+        ROLE_ORGANIZER: [ 'ROLE_VOLUNTEER' ]
+
+        # Can do (almost) anything.
+        ROLE_ADMIN: [ 'ROLE_ORGANIZER', 'ROLE_WEBSITE' ]
+
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'

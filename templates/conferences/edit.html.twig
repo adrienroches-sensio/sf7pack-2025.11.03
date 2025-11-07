@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="container row row-cols-1">
+        <div class="col-md-8 mx-auto">
+            <h1>Edit "{{ conference.name }}"</h1>
+        </div>
+
+        {{ include('conferences/_form.html.twig') }}
+    </section>
+{% endblock content %}

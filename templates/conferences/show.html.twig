@@ -38,6 +38,9 @@
         </div>
         <div class="row">
             <div class="col-md-8 m-auto justify-content-start">
+                <a href="{{ path('app_conference_edit', {'id': conference.id}) }}">
+                    <button class="btn text-white" style="background-color: limegreen;">Edit</button>
+                </a>
                 <a href="{{ path('app_conference_list') }}">
                     <button class="btn text-white" style="background-color: limegreen;">Back</button>
                 </a>

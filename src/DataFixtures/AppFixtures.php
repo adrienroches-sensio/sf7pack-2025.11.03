@@ -4,11 +4,13 @@ namespace App\DataFixtures;
 
 use App\Entity\Conference;
 use App\Entity\Organization;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -66,6 +68,7 @@ class AppFixtures extends Fixture
         bool $accessible = true,
         string|null $description = null,
         string|null $prerequisites = null,
+        User|null $createdBy = null,
     ): Conference
     {
         $conference = new Conference();
@@ -75,11 +78,19 @@ class AppFixtures extends Fixture
         $conference->setStartAt($start);
         $conference->setEndAt($start->modify('+2 days'));
         $conference->setPrerequisites($prerequisites);
+        $conference->setCreatedBy($createdBy ?? $this->getReference('organizer', User::class));
 
         foreach ($organizations as $organization) {
             $conference->addOrganization($organization);
         }
 
         return $conference;
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }
